@@ -11,9 +11,9 @@ export function triggerPrint() {
 /**
  * Calculate how many pages will be needed
  * @param {number} totalCards - Total number of cards
- * @param {number} cardsPerPage - Cards per page (default 6 = 2x3)
+ * @param {number} cardsPerPage - Cards per page (default 8 = 2×4 compact)
  * @returns {number}
  */
-export function calculatePages(totalCards, cardsPerPage = 6) {
+export function calculatePages(totalCards, cardsPerPage = 8) {
   return Math.ceil(totalCards / cardsPerPage);
 }

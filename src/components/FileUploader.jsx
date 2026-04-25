@@ -71,10 +71,10 @@ export default function FileUploader({ onFileSelect, isLoading }) {
 
               {/* Text */}
               <div>
-                <p className="text-lg font-semibold text-white mb-1">
+                <p className="text-lg font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
                   Drag & Drop File Excel
                 </p>
-                <p className="text-sm text-slate-400">
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   atau <span className="text-indigo-400 font-medium hover:text-indigo-300 underline underline-offset-2 decoration-indigo-500/50">klik untuk browse</span>
                 </p>
               </div>
@@ -82,14 +82,14 @@ export default function FileUploader({ onFileSelect, isLoading }) {
               {/* Supported formats */}
               <div className="flex gap-2 mt-1">
                 {['.xlsx', '.xls', '.csv'].map((fmt) => (
-                  <span key={fmt} className="px-3 py-1 text-xs font-medium rounded-full bg-slate-800/80 text-slate-400 border border-slate-700/50">
+                  <span key={fmt} className="px-3 py-1 text-xs font-medium rounded-full border" style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)', borderColor: 'var(--border-color)' }}>
                     {fmt}
                   </span>
                 ))}
               </div>
 
               {/* Hint */}
-              <p className="text-xs text-slate-500 mt-2 max-w-md">
+              <p className="text-xs mt-2 max-w-md" style={{ color: 'var(--text-muted)' }}>
                 💡 Pastikan baris pertama (header) menggunakan format <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">snake_case</code> — contoh: <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">nomor_peserta</code>, <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">nama_lengkap</code>
               </p>
             </>
@@ -104,7 +104,7 @@ function LoadingSpinner() {
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
-      <p className="text-sm text-slate-400 animate-pulse">Membaca file...</p>
+      <p className="text-sm animate-pulse" style={{ color: 'var(--text-secondary)' }}>Membaca file...</p>
     </div>
   );
 }

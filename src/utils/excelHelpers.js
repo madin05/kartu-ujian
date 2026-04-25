@@ -3,20 +3,19 @@ import * as XLSX from 'xlsx';
 /**
  * Required headers (snake_case) for exam card data
  */
-export const REQUIRED_HEADERS = ['nomor_peserta', 'nama_lengkap', 'ruang_ujian', 'waktu'];
-export const OPTIONAL_HEADERS = ['jalur_masuk', 'password', 'nama_file_foto'];
+export const REQUIRED_HEADERS = ['nama', 'nisn', 'kelas', 'no_peserta', 'ruang'];
+export const OPTIONAL_HEADERS = ['nama_file_foto'];
 export const ALL_KNOWN_HEADERS = [...REQUIRED_HEADERS, ...OPTIONAL_HEADERS];
 
 /**
  * Human-readable label mapping for headers
  */
 export const HEADER_LABELS = {
-  nomor_peserta: 'No. Peserta',
-  nama_lengkap: 'Nama Lengkap',
-  ruang_ujian: 'Ruang Ujian',
-  waktu: 'Waktu',
-  jalur_masuk: 'Jalur Masuk',
-  password: 'Password',
+  nama: 'Nama',
+  nisn: 'NISN',
+  kelas: 'Kelas',
+  no_peserta: 'No Peserta',
+  ruang: 'Ruang',
   nama_file_foto: 'File Foto',
 };
 

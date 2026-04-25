@@ -45,6 +45,21 @@ export default function App() {
   const [showUploader, setShowUploader] = useState(true);
   const fileUploaderRef = useRef(null);
 
+  // Theme state — default dark, saved to localStorage
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  // Apply theme to <html> element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
+
   const hasData = data.length > 0;
 
   // Handle file selection
@@ -184,7 +199,7 @@ export default function App() {
       <ToastContainer toasts={toast.toasts} onRemove={toast.removeToast} />
 
       {/* Header */}
-      <Header dataCount={hasData ? data.length : 0} photoCount={photoCount} />
+      <Header dataCount={hasData ? data.length : 0} photoCount={photoCount} theme={theme} onToggleTheme={toggleTheme} />
 
       {/* Main Content */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6">
@@ -234,10 +249,10 @@ export default function App() {
             {view === 'cards' && (
               <div className="no-print">
                 <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-white">
+                  <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                     Preview Kartu Ujian
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                     Tampilan ini adalah preview. Klik "Cetak Kartu" untuk print.
                   </p>
                 </div>
@@ -256,12 +271,12 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="no-print border-t border-slate-800/50 py-4 mt-auto">
+      <footer className="no-print border-t py-4 mt-auto" style={{ borderColor: 'var(--border-color)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
             Cetak Kartu Ujian v1.0 — Berjalan 100% di browser, tanpa server.
           </p>
-          <div className="flex items-center gap-3 text-xs text-slate-600">
+          <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--text-muted)' }}>
             <span className="flex items-center gap-1">
               <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
                 <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

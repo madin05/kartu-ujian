@@ -47,14 +47,14 @@ export default function Toolbar({
             </svg>
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-medium text-white truncate">{fileName}</p>
+            <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>{fileName}</p>
             <div className="flex gap-2 items-center mt-0.5 flex-wrap">
-              <span className="text-xs text-slate-400">{dataCount} peserta</span>
-              <span className="text-slate-600">•</span>
-              <span className="text-xs text-slate-400">{calculatePages(dataCount)} halaman cetak</span>
+              <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{dataCount} peserta</span>
+              <span style={{ color: 'var(--text-muted)' }}>•</span>
+              <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{calculatePages(dataCount)} halaman cetak</span>
               {photoCount > 0 && (
                 <>
-                  <span className="text-slate-600">•</span>
+                  <span style={{ color: 'var(--text-muted)' }}>•</span>
                   <span className="text-xs text-green-400 flex items-center gap-1">
                     <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
                       <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="2"/>
@@ -67,7 +67,7 @@ export default function Toolbar({
               )}
               {hasChanges && (
                 <>
-                  <span className="text-slate-600">•</span>
+                  <span style={{ color: 'var(--text-muted)' }}>•</span>
                   <span className="text-xs text-amber-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                     Belum disimpan
@@ -81,14 +81,15 @@ export default function Toolbar({
         {/* Right - Actions */}
         <div className="toolbar-actions flex gap-2 flex-wrap">
           {/* View Switcher */}
-          <div className="flex bg-slate-800/60 rounded-xl p-1 border border-slate-700/30">
+          <div className="flex rounded-xl p-1 border" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
             <button
               onClick={() => onViewChange('table')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 view === 'table'
-                  ? 'bg-indigo-500/20 text-indigo-300 shadow-sm'
-                  : 'text-slate-400 hover:text-slate-300'
+                  ? 'bg-indigo-500/20 text-indigo-400 shadow-sm'
+                  : ''
               }`}
+              style={view !== 'table' ? { color: 'var(--text-secondary)' } : undefined}
               id="view-table-btn"
             >
               <span className="flex items-center gap-1.5">
@@ -103,9 +104,10 @@ export default function Toolbar({
               onClick={() => onViewChange('cards')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 view === 'cards'
-                  ? 'bg-indigo-500/20 text-indigo-300 shadow-sm'
-                  : 'text-slate-400 hover:text-slate-300'
+                  ? 'bg-indigo-500/20 text-indigo-400 shadow-sm'
+                  : ''
               }`}
+              style={view !== 'cards' ? { color: 'var(--text-secondary)' } : undefined}
               id="view-cards-btn"
             >
               <span className="flex items-center gap-1.5">

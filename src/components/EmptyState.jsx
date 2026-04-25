@@ -4,9 +4,9 @@ export default function EmptyState() {
       {/* Decorative card illustration */}
       <div className="relative mb-8">
         {/* Back card */}
-        <div className="w-48 h-32 rounded-xl bg-gradient-to-br from-slate-700/50 to-slate-800/50 border border-slate-600/30 absolute -top-2 -left-2 rotate-[-6deg] shadow-lg"></div>
+        <div className="w-48 h-32 rounded-xl border absolute -top-2 -left-2 rotate-[-6deg] shadow-lg" style={{ background: 'linear-gradient(to bottom right, var(--bg-tertiary), var(--bg-secondary))', borderColor: 'var(--border-color)' }}></div>
         {/* Middle card */}
-        <div className="w-48 h-32 rounded-xl bg-gradient-to-br from-slate-700/60 to-slate-800/60 border border-slate-600/30 absolute -top-1 -left-1 rotate-[-3deg] shadow-lg"></div>
+        <div className="w-48 h-32 rounded-xl border absolute -top-1 -left-1 rotate-[-3deg] shadow-lg" style={{ background: 'linear-gradient(to bottom right, var(--bg-tertiary), var(--bg-secondary))', borderColor: 'var(--border-color)' }}></div>
         {/* Front card */}
         <div className="w-48 h-32 rounded-xl bg-gradient-to-br from-indigo-600/20 to-indigo-800/20 border border-indigo-500/30 relative shadow-xl flex flex-col items-center justify-center gap-2 p-4">
           <svg width="32" height="32" fill="none" viewBox="0 0 24 24" className="text-indigo-400 animate-bounce-gentle">
@@ -18,8 +18,8 @@ export default function EmptyState() {
         </div>
       </div>
 
-      <h2 className="text-xl font-bold text-white mb-2">Mulai dengan Upload File</h2>
-      <p className="text-sm text-slate-400 max-w-md text-center mb-8 leading-relaxed">
+      <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Mulai dengan Upload File</h2>
+      <p className="text-sm max-w-md text-center mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
         Upload file Excel (.xlsx) yang berisi data peserta ujian. Data akan langsung dikonversi menjadi kartu ujian siap cetak.
       </p>
 
@@ -72,8 +72,8 @@ function FeatureCard({ icon, title, desc, color }) {
   return (
     <div className={`rounded-xl bg-gradient-to-br ${colorMap[color]} border p-4 text-center transition-all hover:scale-105 hover:shadow-lg`}>
       <div className={`inline-flex mb-2 ${colorMap[color].split(' ').pop()}`}>{icon}</div>
-      <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="text-xs text-slate-400 mt-0.5">{desc}</p>
+      <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{title}</p>
+      <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{desc}</p>
     </div>
   );
 }

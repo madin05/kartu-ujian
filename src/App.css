@@ -266,38 +266,38 @@
 }
 
 /* ============================================
-   EXAM CARD TEMPLATE
+   EXAM CARD TEMPLATE (Compact — 8 per A4)
+   Vertical budget (93mm × 66mm):
+   padding-top 2.5mm + kop 11mm + subtitle 3.5mm
+   + body 25mm + footer 19mm + padding-bot 2mm ≈ 63mm content
    ============================================ */
-.exam-card-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  padding: 0;
-}
-
 .exam-card {
-  width: 90mm;
+  width: 93mm;
   height: 55mm;
-  border: 1px solid #333;
-  padding: 5mm;
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 8pt;
-  color: #1a1a1a;
+  border: 1pt solid #000;
+  padding: 2.5mm 3.5mm 2mm;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 7pt;
+  color: #000;
   background: white;
   position: relative;
   page-break-inside: avoid;
   break-inside: avoid;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
+/* --- KOP SURAT — ~11mm total --- */
 .exam-card-header {
   display: flex;
   align-items: center;
-  gap: 3mm;
-  border-bottom: 1.5pt solid #1a1a1a;
-  padding-bottom: 2mm;
-  margin-bottom: 2mm;
+  gap: 2mm;
+  border-bottom: 1.5pt double #000;
+  padding-bottom: 1.5mm;
+  margin-bottom: 0;
+  flex-shrink: 0;
 }
 
 .exam-card-logo {
@@ -309,9 +309,10 @@
   justify-content: center;
 }
 
-.exam-card-logo svg {
+.exam-card-logo img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .exam-card-title {
@@ -319,32 +320,69 @@
   text-align: center;
 }
 
-.exam-card-title h2 {
-  font-size: 9pt;
+.exam-card-title .kop-line-1 {
+  font-size: 6.5pt;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5pt;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.exam-card-title .kop-line-2 {
+  font-size: 6.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.exam-card-title .kop-line-3 {
+  font-size: 7.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.exam-card-title .kop-line-4 {
+  font-size: 5.5pt;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.15;
+  color: #333;
+}
+
+/* --- SUBTITLE — ~3.5mm --- */
+.exam-card-subtitle {
+  text-align: center;
+  margin: 1.5mm 0 1.5mm;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.exam-card-subtitle h2 {
+  font-size: 7pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2pt;
   margin: 0;
   line-height: 1.2;
 }
 
-.exam-card-title p {
-  font-size: 7pt;
-  margin: 0;
-  color: #555;
-}
-
+/* --- BODY — foto + data, fills available space --- */
 .exam-card-body {
   display: flex;
   gap: 3mm;
-  flex: 1;
+  flex: 0 0 auto;
+  height: 22mm;
 }
 
+/* Pas Foto */
 .exam-card-photo {
   width: 18mm;
-  height: 24mm;
-  border: 0.5pt solid #999;
-  background: #f5f5f5;
+  height: 26mm;
+  border: 0.5pt solid #000;
+  background: #fff;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -360,7 +398,7 @@
 
 .exam-card-photo .photo-placeholder {
   font-size: 6pt;
-  color: #999;
+  color: #aaa;
   text-align: center;
 }
 
@@ -368,24 +406,25 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1mm;
+  gap: 0.3mm;
+  justify-content: flex-start;
 }
 
 .exam-card-info .info-row {
   display: flex;
-  font-size: 7.5pt;
-  line-height: 1.4;
+  font-size: 7.5px;
+  line-height: 1.35;
 }
 
 .exam-card-info .info-label {
-  width: 22mm;
-  font-weight: 600;
+  width: 16mm;
+  font-weight: 700;
   flex-shrink: 0;
-  color: #333;
+  color: #000;
 }
 
 .exam-card-info .info-separator {
-  width: 3mm;
+  width: 2.5mm;
   flex-shrink: 0;
   text-align: center;
 }
@@ -397,26 +436,70 @@
   white-space: normal;
 }
 
+/* --- FOOTER — signature block, pushed to bottom --- */
 .exam-card-footer {
-  border-top: 0.5pt dashed #999;
-  padding-top: 1.5mm;
+  padding-top: 0;
   margin-top: auto;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-shrink: 0;
 }
 
-.exam-card-footer .signature-area {
+.footer-spacer {
+  flex: 1;
+}
+
+.signature-block {
+  margin-top: -8.7mm;
+  margin-right: 6mm;
   text-align: center;
-  font-size: 6.5pt;
-  color: #666;
+  font-size: 7.5px;
+  line-height: 1.25;
 }
 
-.exam-card-footer .signature-line {
-  width: 25mm;
-  border-bottom: 0.5pt solid #999;
-  height: 10mm;
-  margin-bottom: 1mm;
+.signature-block .sig-location {
+  margin: 0;
+}
+
+.signature-block .sig-title {
+  margin: 0;
+}
+
+.sig-stamp-area {
+  position: relative;
+  height: 8mm;
+  width: 22mm;
+  margin: 0 auto;
+}
+
+.sig-stamp-area .stamp-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 9mm;
+  height: 9mm;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.sig-stamp-area .signature-img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 16mm;
+  height: 8mm;
+  object-fit: contain;
+}
+
+.signature-block .sig-name {
+  margin: 0;
+  font-weight: 700;
+  font-size: 5.5pt;
+}
+
+.signature-block .sig-nip {
+  font-size: 5pt;
 }
 
 /* ============================================
@@ -595,14 +678,14 @@
     display: block !important;
   }
 
-  /* Print card grid layout */
+  /* Print card grid layout — 2 cols × 4 rows = 8 per page */
   .print-card-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 90mm);
-    grid-auto-rows: 55mm;
-    gap: 5mm;
+    grid-template-columns: repeat(2, 93mm);
+    grid-auto-rows: 66mm;
+    gap: 2mm 4mm;
     justify-content: center;
-    padding: 10mm;
+    padding: 5mm;
     margin: 0;
   }
 
@@ -615,9 +698,9 @@
     break-inside: avoid !important;
   }
 
-  /* Page break every 6 cards (2 cols x 3 rows) */
-  .exam-card:nth-child(6n+1) {
-    page-break-before: auto;
+  /* Page break every 8 cards */
+  .exam-card:nth-child(8n+1):not(:first-child) {
+    page-break-before: always;
   }
 
   .page-break-after {
@@ -626,8 +709,139 @@
 
   @page {
     size: A4 portrait;
-    margin: 10mm;
+    margin: 5mm;
   }
+}
+
+/* ============================================
+   LIGHT MODE OVERRIDES (App-specific)
+   ============================================ */
+[data-theme="light"] .data-table thead th {
+  background: rgba(241, 245, 249, 0.97);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .data-table tbody tr {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="light"] .data-table tbody tr:nth-child(even) {
+  background: rgba(241, 245, 249, 0.5);
+}
+
+[data-theme="light"] .data-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.06);
+}
+
+[data-theme="light"] .data-table tbody tr:nth-child(even):hover {
+  background: rgba(99, 102, 241, 0.08);
+}
+
+[data-theme="light"] .data-table tbody td {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .data-table tbody td.editing input {
+  background: #fff;
+  color: #1e293b;
+  border-color: var(--brand-primary);
+}
+
+[data-theme="light"] .dropzone {
+  border-color: rgba(99, 102, 241, 0.25);
+}
+
+[data-theme="light"] .dropzone::before {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.02) 0%, rgba(129, 140, 248, 0.02) 100%);
+}
+
+[data-theme="light"] .dropzone:hover,
+[data-theme="light"] .dropzone.drag-over {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.08);
+}
+
+[data-theme="light"] .btn-secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #cbd5e1;
+}
+
+[data-theme="light"] .btn-ghost {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .badge-primary {
+  background: rgba(99, 102, 241, 0.1);
+  color: #4f46e5;
+}
+
+[data-theme="light"] .badge-success {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+[data-theme="light"] .badge-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+[data-theme="light"] .card-preview-grid .exam-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+[data-theme="light"] .photo-thumb-btn {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .photo-delete-btn {
+  border-color: #fff;
+}
+
+[data-theme="light"] .search-input {
+  background: #fff;
+  border-color: #e2e8f0;
+  color: #1e293b;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--brand-secondary);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.theme-toggle svg {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(15deg);
 }
 
 /* ============================================

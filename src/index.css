@@ -23,6 +23,27 @@
   --glass-blur: 16px;
 }
 
+/* ============================================
+   LIGHT MODE — ramah untuk semua usia
+   ============================================ */
+[data-theme="light"] {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e2e8f0;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --brand-primary: #4f46e5;
+  --brand-secondary: #6366f1;
+  --brand-glow: rgba(99, 102, 241, 0.2);
+  --success: #16a34a;
+  --warning: #d97706;
+  --error: #dc2626;
+  --border-color: rgba(148, 163, 184, 0.25);
+  --glass-blur: 16px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -96,6 +117,45 @@ body::before {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+/* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+[data-theme="light"] body,
+[data-theme="light"] {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(129, 140, 248, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .glass-strong {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* ============================================

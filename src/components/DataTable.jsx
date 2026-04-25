@@ -154,7 +154,8 @@ export default function DataTable({ data, headers, onUpdateCell, onDeleteRow, on
             placeholder="Cari peserta..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+            className="search-input w-full pl-10 pr-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+            style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
             id="search-input"
           />
           {searchTerm && (
@@ -170,7 +171,7 @@ export default function DataTable({ data, headers, onUpdateCell, onDeleteRow, on
         </div>
 
         <div className="flex gap-2 items-center">
-          <span className="text-xs text-slate-500">
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
             {filteredData.length} dari {data.length} data
           </span>
           <button
@@ -326,8 +327,8 @@ export default function DataTable({ data, headers, onUpdateCell, onDeleteRow, on
       </div>
 
       {/* Help text */}
-      <p className="mt-3 text-xs text-slate-600 flex items-center gap-1.5">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" className="text-slate-600">
+      <p className="mt-3 text-xs flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" style={{ color: 'var(--text-muted)' }}>
           <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
           <path d="M12 16v-4M12 8h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>

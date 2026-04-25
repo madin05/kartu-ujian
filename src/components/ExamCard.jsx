@@ -1,49 +1,53 @@
 /**
  * Single Exam Card Component
+ * Template: Kartu ASAJ SD (formal government letterhead)
  */
 export default function ExamCard({ data, index, photoMap = {} }) {
   const {
-    nomor_peserta = '',
-    nama_lengkap = '',
-    ruang_ujian = '',
-    waktu = '',
-    jalur_masuk = '',
-    password = '',
+    nama = '',
+    nisn = '',
+    kelas = '',
+    no_peserta = '',
+    ruang = '',
     nama_file_foto = '',
   } = data;
 
-  // Get photo from the photoMap using filename
+  // Get participant photo from photoMap
   const photoSrc = nama_file_foto && photoMap[nama_file_foto.trim()]
     ? photoMap[nama_file_foto.trim()]
     : null;
 
   return (
     <div className="exam-card" id={`exam-card-${index}`}>
-      {/* Header */}
+      {/* === KOP SURAT (Letterhead) === */}
       <div className="exam-card-header">
         <div className="exam-card-logo">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="8" fill="#1e293b"/>
-            <path d="M12 14h16M12 20h16M12 26h10" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="round"/>
-          </svg>
+          <img src="/logo-disdik.png" alt="Logo Disdik" />
         </div>
         <div className="exam-card-title">
-          <h2>Kartu Tanda Peserta</h2>
-          <p>Ujian Masuk</p>
+          <p className="kop-line-1">PEMERINTAH DAERAH KABUPATEN TANGERANG</p>
+          <p className="kop-line-2">DINAS PENDIDIKAN</p>
+          <p className="kop-line-3">SD NEGERI SUKABAKTI</p>
+          <p className="kop-line-4">Jl. AMD Sukabakti No.16 Kel. Sukabakti Kec. Curug</p>
         </div>
-        <div className="exam-card-logo" style={{opacity: 0}}>
-          {/* Spacer for center alignment */}
+        <div className="exam-card-logo">
+          <img src="/logo-sekolah.png" alt="Logo Sekolah" />
         </div>
       </div>
 
-      {/* Body */}
+      {/* === JUDUL KARTU === */}
+      <div className="exam-card-subtitle">
+        <h2>KARTU ASESMEN SUMATIF AKHIR JENJANG (ASAJ) SD</h2>
+      </div>
+
+      {/* === BODY — Foto + Data Peserta === */}
       <div className="exam-card-body">
-        {/* Photo */}
+        {/* Pas Foto */}
         <div className="exam-card-photo">
           {photoSrc ? (
             <img
               src={photoSrc}
-              alt={nama_lengkap}
+              alt={nama}
               onError={(e) => {
                 e.target.style.display = 'none';
                 if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
@@ -61,53 +65,48 @@ export default function ExamCard({ data, index, photoMap = {} }) {
               height: '100%',
             }}
           >
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" style={{color: '#ccc', marginBottom: '2px'}}>
-              <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span>Pas Foto</span>
+            <span>foto</span>
           </div>
         </div>
 
-        {/* Info */}
+        {/* Data Fields */}
         <div className="exam-card-info">
-          <InfoRow label="No. Peserta" value={nomor_peserta} bold />
-          <InfoRow label="Nama" value={nama_lengkap} />
-          {jalur_masuk && <InfoRow label="Jalur" value={jalur_masuk} />}
-          <InfoRow label="Ruang" value={ruang_ujian} />
-          <InfoRow label="Waktu" value={waktu} />
-          {password && <InfoRow label="Password" value={password} mono />}
+          <InfoRow label="Nama" value={nama} />
+          <InfoRow label="NISN" value={nisn} />
+          <InfoRow label="Kelas" value={kelas} />
+          <InfoRow label="No Peserta" value={no_peserta} bold />
+          <InfoRow label="Ruang" value={ruang} />
         </div>
       </div>
 
-      {/* Footer */}
+      {/* === FOOTER — Cap + Tanda Tangan === */}
       <div className="exam-card-footer">
-        <div className="signature-area">
-          <div className="signature-line"></div>
-          <span>Tanda Tangan</span>
-        </div>
-        <div className="signature-area">
-          <div className="signature-line"></div>
-          <span>Panitia</span>
+        <div className="footer-spacer"></div>
+        <div className="signature-block">
+          <p className="sig-location">Curug, 28 April 2026</p>
+          <p className="sig-title">Kepala Sekolah,</p>
+          <div className="sig-stamp-area">
+            <img src="/cap-sekolah.png" alt="Cap Sekolah" className="stamp-img" />
+            <img src="/ttd-kepsek.png" alt="Tanda Tangan" className="signature-img" />
+          </div>
+          <p className="sig-name"><u>Risnawiyati Octavia. S.Pd..,M.Pd</u></p>
+          <p className="sig-nip">NIP. 198010182008012008</p>
         </div>
       </div>
     </div>
   );
 }
 
-function InfoRow({ label, value, bold = false, mono = false }) {
+function InfoRow({ label, value, bold = false }) {
   return (
     <div className="info-row">
       <span className="info-label">{label}</span>
       <span className="info-separator">:</span>
       <span
         className="info-value"
-        style={{
-          fontWeight: bold ? '700' : '400',
-          fontFamily: mono ? "'Courier New', monospace" : 'inherit',
-          letterSpacing: mono ? '0.5pt' : 'normal',
-        }}
+        style={{ fontWeight: bold ? '700' : '400' }}
       >
-        {value || '-'}
+        {value || ''}
       </span>
     </div>
   );
