@@ -1,0 +1,699 @@
+/* ============================================
+   APP-SPECIFIC STYLES & PRINT LAYOUT
+   ============================================ */
+
+/* ============================================
+   DRAG & DROP ZONE 
+   ============================================ */
+.dropzone {
+  position: relative;
+  border: 2px dashed rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.dropzone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(129, 140, 248, 0.03) 100%);
+  transition: all 0.3s ease;
+}
+
+.dropzone:hover,
+.dropzone.drag-over {
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+}
+
+.dropzone:hover::before,
+.dropzone.drag-over::before {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(129, 140, 248, 0.08) 100%);
+}
+
+.dropzone.drag-over {
+  transform: scale(1.01);
+}
+
+/* ============================================
+   DATA TABLE
+   ============================================ */
+.data-table-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.data-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table thead th {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.data-table thead th:hover {
+  color: var(--brand-secondary);
+}
+
+.data-table thead th .sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.data-table thead th:hover .sort-icon,
+.data-table thead th.sorted .sort-icon {
+  opacity: 1;
+}
+
+.data-table tbody tr {
+  transition: background 0.15s ease;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: rgba(30, 41, 59, 0.3);
+}
+
+.data-table tbody tr:nth-child(even):hover {
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.data-table tbody td {
+  padding: 10px 16px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.data-table tbody td.editing {
+  padding: 4px;
+}
+
+.data-table tbody td .cell-input {
+  width: 100%;
+  padding: 6px 12px;
+  background: var(--bg-primary);
+  border: 2px solid var(--brand-primary);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.data-table .row-number {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  width: 50px;
+  text-align: center;
+}
+
+.data-table .action-cell {
+  width: 40px;
+  text-align: center;
+}
+
+.data-table .delete-btn {
+  opacity: 0;
+  transition: opacity 0.2s;
+  background: none;
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.data-table tbody tr:hover .delete-btn {
+  opacity: 0.6;
+}
+
+.data-table .delete-btn:hover {
+  opacity: 1 !important;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* New row highlight animation */
+.data-table tbody tr.new-row-highlight {
+  background: rgba(34, 197, 94, 0.12) !important;
+  animation: newRowPulse 2s ease-out;
+}
+
+@keyframes newRowPulse {
+  0% { background: rgba(34, 197, 94, 0.25); }
+  50% { background: rgba(34, 197, 94, 0.15); }
+  100% { background: rgba(34, 197, 94, 0.08); }
+}
+
+/* Photo thumbnail in table */
+.photo-thumb-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-thumb-btn:hover {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.photo-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.photo-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1.5px dashed rgba(99, 102, 241, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.photo-thumb-btn:hover .photo-thumb-placeholder {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: var(--brand-secondary);
+}
+
+/* Photo thumbnail wrapper with delete overlay */
+.photo-thumb-wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+}
+
+.photo-delete-btn {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid var(--bg-secondary);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.15s ease;
+  z-index: 2;
+}
+
+.photo-thumb-wrapper:hover .photo-delete-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.photo-delete-btn:hover {
+  background: #dc2626;
+  transform: scale(1.15) !important;
+}
+
+/* ============================================
+   EXAM CARD TEMPLATE
+   ============================================ */
+.exam-card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  padding: 0;
+}
+
+.exam-card {
+  width: 90mm;
+  height: 55mm;
+  border: 1px solid #333;
+  padding: 5mm;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 8pt;
+  color: #1a1a1a;
+  background: white;
+  position: relative;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+}
+
+.exam-card-header {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  border-bottom: 1.5pt solid #1a1a1a;
+  padding-bottom: 2mm;
+  margin-bottom: 2mm;
+}
+
+.exam-card-logo {
+  width: 10mm;
+  height: 10mm;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exam-card-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.exam-card-title {
+  flex: 1;
+  text-align: center;
+}
+
+.exam-card-title h2 {
+  font-size: 9pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.exam-card-title p {
+  font-size: 7pt;
+  margin: 0;
+  color: #555;
+}
+
+.exam-card-body {
+  display: flex;
+  gap: 3mm;
+  flex: 1;
+}
+
+.exam-card-photo {
+  width: 18mm;
+  height: 24mm;
+  border: 0.5pt solid #999;
+  background: #f5f5f5;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.exam-card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exam-card-photo .photo-placeholder {
+  font-size: 6pt;
+  color: #999;
+  text-align: center;
+}
+
+.exam-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+}
+
+.exam-card-info .info-row {
+  display: flex;
+  font-size: 7.5pt;
+  line-height: 1.4;
+}
+
+.exam-card-info .info-label {
+  width: 22mm;
+  font-weight: 600;
+  flex-shrink: 0;
+  color: #333;
+}
+
+.exam-card-info .info-separator {
+  width: 3mm;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.exam-card-info .info-value {
+  flex: 1;
+  font-weight: 400;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.exam-card-footer {
+  border-top: 0.5pt dashed #999;
+  padding-top: 1.5mm;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.exam-card-footer .signature-area {
+  text-align: center;
+  font-size: 6.5pt;
+  color: #666;
+}
+
+.exam-card-footer .signature-line {
+  width: 25mm;
+  border-bottom: 0.5pt solid #999;
+  height: 10mm;
+  margin-bottom: 1mm;
+}
+
+/* ============================================
+   EXAM CARD PREVIEW (SCREEN)
+   ============================================ */
+.card-preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card-preview-grid .exam-card {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border-radius: 4px;
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 25px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: rgba(71, 85, 105, 0.8);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.btn-success:hover {
+  box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--brand-secondary);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+
+.btn-icon {
+  padding: 8px;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   BADGE
+   ============================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-primary {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--brand-secondary);
+}
+
+.badge-success {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+/* Hidden on screen, visible in print */
+.hidden-screen {
+  display: none;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  /* Hide everything except cards */
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  .no-print,
+  header,
+  .toolbar,
+  .toast-container,
+  .file-uploader,
+  .data-table-wrapper,
+  .view-switcher,
+  footer {
+    display: none !important;
+  }
+
+  .print-only,
+  .hidden-screen {
+    display: block !important;
+  }
+
+  /* Print card grid layout */
+  .print-card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 90mm);
+    grid-auto-rows: 55mm;
+    gap: 5mm;
+    justify-content: center;
+    padding: 10mm;
+    margin: 0;
+  }
+
+  .exam-card {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: 0.5pt solid #000 !important;
+    margin: 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Page break every 6 cards (2 cols x 3 rows) */
+  .exam-card:nth-child(6n+1) {
+    page-break-before: auto;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+
+  .toolbar-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .data-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card-preview-grid {
+    padding: 10px;
+  }
+}
+
+/* ============================================
+   TRANSITIONS
+   ============================================ */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+/* ============================================
+   TOOLTIP
+   ============================================ */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border: 1px solid var(--border-color);
+  z-index: 50;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+}
