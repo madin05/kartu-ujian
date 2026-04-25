@@ -61,12 +61,12 @@ Ada **3 cara** upload foto:
 
 **Contoh matching:**
 ```
-ZIP berisi:                  Peserta (sorted by nama):
-├── 01_foto.jpg          →   Ahmad Rizky Pratama
-├── 02_foto.jpg          →   Budi Santoso
-├── 03_foto.jpg          →   Dewi Lestari Anggraini
-├── 04_foto.jpg          →   Dian Purnama Sari
-└── 05_foto.jpg          →   Fikri Maulana Akbar
+ZIP berisi:                                    Peserta (sorted by nama):
+├── Ahmad_Rizky_Pratama.jpg                →   Ahmad Rizky Pratama
+├── Budi_Santoso.jpg                       →   Budi Santoso
+├── Dewi_Lestari_Anggraini.jpg             →   Dewi Lestari Anggraini
+├── Dian_Purnama_Sari.jpg                  →   Dian Purnama Sari
+└── Fikri_Maulana_Akbar.jpg                →   Fikri Maulana Akbar
 ```
 
 > File test: `foto_peserta.zip` (sudah tersedia di folder project)

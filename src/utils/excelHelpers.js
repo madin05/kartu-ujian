@@ -38,15 +38,25 @@ export async function readExcelFile(file) {
         const worksheet = workbook.Sheets[sheetName];
 
         // Convert to JSON (array of objects)
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+        const rawJsonData = XLSX.utils.sheet_to_json(worksheet, {
           defval: '', // Default empty string for missing values
           raw: false, // Convert all to strings to preserve formatting
         });
 
-        if (jsonData.length === 0) {
+        if (rawJsonData.length === 0) {
           reject(new Error('File tidak memiliki data. Pastikan file berisi minimal 1 baris data.'));
           return;
         }
+
+        // Normalize header keys: trim, lowercase, replace spaces with underscores
+        const jsonData = rawJsonData.map(row => {
+          const newRow = {};
+          Object.keys(row).forEach(key => {
+            const normalizedKey = key.trim().toLowerCase().replace(/\s+/g, '_');
+            newRow[normalizedKey] = row[key];
+          });
+          return newRow;
+        });
 
         const headers = Object.keys(jsonData[0]);
 
