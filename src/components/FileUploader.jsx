@@ -90,7 +90,7 @@ export default function FileUploader({ onFileSelect, isLoading }) {
 
               {/* Hint */}
               <p className="text-xs mt-2 max-w-md" style={{ color: 'var(--text-muted)' }}>
-                💡 Pastikan baris pertama (header) menggunakan format <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">snake_case</code> — contoh: <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">nomor_peserta</code>, <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">nama_lengkap</code>
+                Pastikan baris pertama (header) menggunakan format <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">snake_case</code> — contoh: <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">nomor_peserta</code>, <code className="text-indigo-400/80 bg-indigo-500/10 px-1.5 py-0.5 rounded">nama_lengkap</code>
               </p>
             </>
           )}

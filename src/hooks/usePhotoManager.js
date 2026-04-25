@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import JSZip from 'jszip';
 
 /**
  * Custom hook for managing participant photos
@@ -29,6 +30,83 @@ export default function usePhotoManager() {
     setPhotoMap(newMap);
     setPhotoCount(Object.keys(newMap).length);
     return { added: count, total: Object.keys(newMap).length };
+  }, [photoMap]);
+
+  /**
+   * Extract photos from a ZIP file and auto-match to data rows by alphabetical order.
+   * Photos inside ZIP are sorted by filename (A-Z),
+   * then matched to data rows sorted by 'nama' field (A-Z).
+   *
+   * @param {File} zipFile - The ZIP file to extract
+   * @param {object[]} data - Current data rows
+   * @param {function} updateCell - Function to update cell value
+   * @returns {Promise<{ added: number, matched: number }>}
+   */
+  const addPhotosFromZip = useCallback(async (zipFile, data, updateCell) => {
+    const zip = await JSZip.loadAsync(zipFile);
+
+    // Collect all image files from the ZIP
+    const imageEntries = [];
+    zip.forEach((relativePath, entry) => {
+      if (entry.dir) return;
+      const lower = relativePath.toLowerCase();
+      if (
+        lower.endsWith('.jpg') ||
+        lower.endsWith('.jpeg') ||
+        lower.endsWith('.png') ||
+        lower.endsWith('.webp') ||
+        lower.endsWith('.gif') ||
+        lower.endsWith('.bmp')
+      ) {
+        // Use only the filename (strip folders)
+        const filename = relativePath.split('/').pop();
+        imageEntries.push({ filename, entry });
+      }
+    });
+
+    if (imageEntries.length === 0) {
+      return { added: 0, matched: 0 };
+    }
+
+    // Sort images by filename A-Z
+    imageEntries.sort((a, b) => a.filename.localeCompare(b.filename, 'id'));
+
+    // Sort data rows by 'nama' field A-Z
+    const sortedRows = [...data]
+      .filter((row) => row.nama && row.nama.trim())
+      .sort((a, b) => (a.nama || '').localeCompare(b.nama || '', 'id'));
+
+    // Extract images and match to rows
+    const newMap = { ...photoMap };
+    let added = 0;
+    let matched = 0;
+
+    for (let i = 0; i < imageEntries.length; i++) {
+      const { filename, entry } = imageEntries[i];
+
+      try {
+        // Extract image as blob
+        const blob = await entry.async('blob');
+        const url = URL.createObjectURL(blob);
+        newMap[filename] = url;
+        added++;
+
+        // Match to corresponding row (by index)
+        if (i < sortedRows.length) {
+          const row = sortedRows[i];
+          // Update the nama_file_foto field
+          updateCell(row._id, 'nama_file_foto', filename);
+          matched++;
+        }
+      } catch (err) {
+        console.warn(`Failed to extract ${filename}:`, err);
+      }
+    }
+
+    setPhotoMap(newMap);
+    setPhotoCount(Object.keys(newMap).length);
+
+    return { added, matched };
   }, [photoMap]);
 
   /**
@@ -113,6 +191,7 @@ export default function usePhotoManager() {
     photoMap,
     photoCount,
     addPhotos,
+    addPhotosFromZip,
     addSinglePhoto,
     getPhoto,
     removePhoto,

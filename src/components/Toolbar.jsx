@@ -13,14 +13,24 @@ export default function Toolbar({
   onClear,
   onUploadNew,
   onPhotoUpload,
+  onZipUpload,
   fileName,
 }) {
   const photoInputRef = useRef(null);
+  const zipInputRef = useRef(null);
 
   const handlePhotoSelect = (e) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       onPhotoUpload(files);
+    }
+    e.target.value = '';
+  };
+
+  const handleZipSelect = (e) => {
+    const file = e.target.files[0];
+    if (file && onZipUpload) {
+      onZipUpload(file);
     }
     e.target.value = '';
   };
@@ -36,6 +46,16 @@ export default function Toolbar({
         onChange={handlePhotoSelect}
         className="hidden"
         id="photo-input"
+      />
+
+      {/* Hidden ZIP input */}
+      <input
+        ref={zipInputRef}
+        type="file"
+        accept=".zip,.rar,.7z"
+        onChange={handleZipSelect}
+        className="hidden"
+        id="zip-input"
       />
 
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
@@ -147,6 +167,20 @@ export default function Toolbar({
             {photoCount > 0 && (
               <span className="bg-green-500/20 text-green-400 text-[10px] font-bold px-1.5 py-0.5 rounded-full">{photoCount}</span>
             )}
+          </button>
+
+          {/* ZIP Photo Upload Button */}
+          <button
+            onClick={() => zipInputRef.current?.click()}
+            className="btn btn-sm btn-ghost"
+            id="upload-zip-btn"
+            data-tooltip="Upload ZIP foto (auto-match A-Z)"
+          >
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+              <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 11v6M9 14h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            Upload ZIP
           </button>
 
           <button

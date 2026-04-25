@@ -9,6 +9,7 @@ import { ToastContainer, useToast } from './components/Toast';
 import useExcelParser from './hooks/useExcelParser';
 import usePhotoManager from './hooks/usePhotoManager';
 import { triggerPrint } from './utils/printHelpers';
+import ConfirmDialog from './components/ConfirmDialog';
 
 export default function App() {
   const {
@@ -31,6 +32,7 @@ export default function App() {
     photoMap,
     photoCount,
     addPhotos,
+    addPhotosFromZip,
     addSinglePhoto,
     getPhoto,
     removePhoto,
@@ -43,6 +45,7 @@ export default function App() {
   toastRef.current = toast;
   const [view, setView] = useState('table'); // 'table' | 'cards'
   const [showUploader, setShowUploader] = useState(true);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const fileUploaderRef = useRef(null);
 
   // Theme state — default dark, saved to localStorage
@@ -99,6 +102,38 @@ export default function App() {
     }
   }, [addPhotos, hasData, data, getMatchStats]);
 
+  // Handle ZIP photo upload
+  const handleZipUpload = useCallback(async (file) => {
+    if (!hasData || data.length === 0) {
+      toastRef.current.error('Upload data Excel terlebih dahulu sebelum upload ZIP foto');
+      return;
+    }
+
+    toastRef.current.info('Mengekstrak file ZIP...');
+
+    try {
+      const result = await addPhotosFromZip(file, data, updateCell);
+
+      if (result.added === 0) {
+        toastRef.current.error('Tidak ada file gambar ditemukan di dalam ZIP');
+        return;
+      }
+
+      toastRef.current.success(
+        `${result.added} foto diekstrak, ${result.matched} foto di-match ke peserta (urut A-Z)`
+      );
+
+      if (result.added > result.matched) {
+        toastRef.current.warning(
+          `${result.added - result.matched} foto tidak ter-match (jumlah foto > jumlah peserta)`
+        );
+      }
+    } catch (err) {
+      console.error('ZIP extraction error:', err);
+      toastRef.current.error('Gagal membaca file ZIP: ' + err.message);
+    }
+  }, [hasData, data, addPhotosFromZip, updateCell]);
+
   // Handle single photo upload for a row
   const handleSinglePhotoUpload = useCallback((file, rowId) => {
     // Find the row to get/set the filename
@@ -149,16 +184,19 @@ export default function App() {
   // Handle clear / upload new
   const handleUploadNew = useCallback(() => {
     if (hasChanges) {
-      const confirm = window.confirm(
-        'Ada perubahan yang belum disimpan. Apakah ingin melanjutkan? Data yang belum diunduh akan hilang.'
-      );
-      if (!confirm) return;
+      setIsConfirmOpen(true);
+    } else {
+      executeUploadNew();
     }
+  }, [hasChanges]);
+
+  const executeUploadNew = useCallback(() => {
     clearData();
     clearPhotos();
     setShowUploader(true);
     setView('table');
-  }, [hasChanges, clearData, clearPhotos]);
+    setIsConfirmOpen(false);
+  }, [clearData, clearPhotos]);
 
   // Handle add row
   const handleAddRow = useCallback(() => {
@@ -228,6 +266,7 @@ export default function App() {
               onClear={clearData}
               onUploadNew={handleUploadNew}
               onPhotoUpload={handlePhotoUpload}
+              onZipUpload={handleZipUpload}
               fileName={fileName}
             />
 
@@ -286,6 +325,17 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isConfirmOpen}
+        title="Upload File Baru?"
+        message="Ada perubahan yang belum disimpan. Apakah Anda yakin ingin melanjutkan? Data yang belum diunduh akan hilang."
+        onConfirm={executeUploadNew}
+        onCancel={() => setIsConfirmOpen(false)}
+        confirmText="Ya, Upload Baru"
+        cancelText="Batal"
+      />
     </div>
   );
 }
