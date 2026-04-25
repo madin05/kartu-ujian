@@ -37,10 +37,47 @@ export async function readExcelFile(file) {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
 
-        // Convert to JSON (array of objects)
+        // First, read as array of arrays to find the actual header row
+        const rawArrayData = XLSX.utils.sheet_to_json(worksheet, {
+          header: 1,
+          defval: '',
+          raw: false,
+        });
+
+        if (rawArrayData.length === 0) {
+          reject(new Error('File tidak memiliki data. Pastikan file berisi minimal 1 baris data.'));
+          return;
+        }
+
+        // Find the header row (search up to first 20 rows)
+        let headerRowIndex = 0;
+        let bestMatchCount = 0;
+
+        for (let i = 0; i < Math.min(rawArrayData.length, 20); i++) {
+          const row = rawArrayData[i];
+          if (!Array.isArray(row)) continue;
+          
+          let matchCount = 0;
+          const normalizedCells = row.map(cell => String(cell).trim().toLowerCase().replace(/\s+/g, '_'));
+          
+          REQUIRED_HEADERS.forEach(req => {
+            if (normalizedCells.includes(req)) matchCount++;
+          });
+
+          if (matchCount > bestMatchCount) {
+            bestMatchCount = matchCount;
+            headerRowIndex = i;
+          }
+          
+          // Stop early if we found a perfect match
+          if (matchCount === REQUIRED_HEADERS.length) break;
+        }
+
+        // Now parse the sheet correctly starting from the detected header row
         const rawJsonData = XLSX.utils.sheet_to_json(worksheet, {
-          defval: '', // Default empty string for missing values
-          raw: false, // Convert all to strings to preserve formatting
+          range: headerRowIndex,
+          defval: '',
+          raw: false,
         });
 
         if (rawJsonData.length === 0) {
